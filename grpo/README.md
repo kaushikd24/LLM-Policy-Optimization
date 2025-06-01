@@ -1,26 +1,26 @@
 # GRPO: Group Relative Policy Optimization
 
-##Overview
+### Overview
 
 **Group Relative Policy Optimization (GRPO)** is a lightweight and efficient reinforcement learning (RL) algorithm designed to fine-tune large language models (LLMs) *without* the computational overhead of a critic. It's particularly suited for tasks like instruction tuning and mathematical reasoning, where reward signal comparison across groups of outputs is more informative than scalar-valued feedback.
 
 This repo implements the GRPO algorithm with HuggingFace Transformers + LoRA (via PEFT), adapted for autoregressive language modeling tasks like math instruction tuning, preference learning, and beyond.
 
-> 💡 GRPO was originally introduced in [DeepSeekMath](https://arxiv.org/abs/2402.03300), where it helped outperform all open-source 7B–70B models on the MATH benchmark — with fewer parameters and less compute than PPO.
+> GRPO was originally introduced in [DeepSeekMath](https://arxiv.org/abs/2402.03300), where it helped outperform all open-source 7B–70B models on the MATH benchmark — with fewer parameters and less compute than PPO.
 
 ---
 
-## 🚀 Key Features
+### Key Features
 
-* 🔥 **KL-based loss over relative sequence scores** — no critic network needed.
-* 🧩 **LoRA-compatible** via HuggingFace PEFT.
-* 🛠️ Drop-in support for any `AutoModelForCausalLM`-style model (e.g., GPT-2, LLaMA).
-* 🧪 Built-in dataset support for GRPO-style JSON formats.
-* 🧮 Optimized for training efficiency using `Trainer`.
+* **KL-based loss over relative sequence scores** — no critic network needed.
+* **LoRA-compatible** via HuggingFace PEFT.
+* Drop-in support for any `AutoModelForCausalLM`-style model (e.g., GPT-2, LLaMA).
+* Built-in dataset support for GRPO-style JSON formats.
+* Optimized for training efficiency using `Trainer`.
 
 ---
 
-## 🗂️ Project Structure
+### Project Structure
 
 ```bash
 grpo/
@@ -35,7 +35,7 @@ grpo/
 
 ---
 
-## 🧠 How GRPO Works (TL;DR)
+### How GRPO Works (TL;DR)
 
 Instead of optimizing a scalar reward like PPO does with a critic, **GRPO**:
 
@@ -48,7 +48,7 @@ This avoids the need for a value network and is more stable under sparse rewards
 
 ---
 
-## 📦 Setup
+### Setup
 
 Install dependencies:
 
@@ -67,7 +67,7 @@ You'll need:
 
 ---
 
-## 🧪 Example: Running GRPO Training
+### Example: Running GRPO Training
 
 Configure your settings in `configs/grpo_config.yaml`. Then run:
 
@@ -90,7 +90,7 @@ logging_dir: logs/
 
 ---
 
-## 🧬 Example Dataset Format
+### Example Dataset Format
 
 The dataset should be a JSONL file where each entry contains multiple completions per prompt with associated scores:
 
@@ -109,7 +109,7 @@ Each group is tokenized into a batch of shape `(B, K, T)` — Batch size × Comp
 
 ---
 
-## 🧠 The GRPO Loss
+### The GRPO Loss
 
 ```python
 KL(π_policy || π_target), where
@@ -127,7 +127,7 @@ Where `log_q` is detached to avoid backprop through the reward function.
 
 ---
 
-## 📈 Logging + Saving
+### Logging + Saving
 
 * Logs every 20 steps (`logging_steps: 20`)
 * Saves checkpoints every 500 steps
@@ -137,7 +137,7 @@ Modify `TrainingArguments` in `train_grpo.py` if needed.
 
 ---
 
-## 🛠️ Notes
+### Notes
 
 * Make sure your tokenizer has a valid `pad_token_id` (we default to EOS).
 * LoRA weights must be made trainable (`is_trainable=True`).
@@ -145,46 +145,43 @@ Modify `TrainingArguments` in `train_grpo.py` if needed.
 
 ---
 
-## 📘 Paper
+### Paper
 
-> 📄 *Group Relative Policy Optimization (GRPO)* was proposed in
+> *Group Relative Policy Optimization (GRPO)* was proposed in
 > [DeepSeekMath: Pushing the Limits of Mathematical Reasoning in Open Language Models](https://arxiv.org/abs/2402.03300)
 > (Zhihong Shao et al., 2024)
 
 ---
 
-## 👀 Related Work
+### Related Work
 
-* 🧾 [DPO (Direct Preference Optimization)](https://arxiv.org/abs/2305.18290)
-* 🧠 [PPO (Proximal Policy Optimization)](https://arxiv.org/abs/1707.06347)
-* 🤖 [LoRA: Low-Rank Adaptation](https://arxiv.org/abs/2106.09685)
-* 🏗️ [PEFT: Parameter-Efficient Fine-Tuning](https://huggingface.co/docs/peft)
+* [DPO (Direct Preference Optimization)](https://arxiv.org/abs/2305.18290)
+* [PPO (Proximal Policy Optimization)](https://arxiv.org/abs/1707.06347)
+* [LoRA: Low-Rank Adaptation](https://arxiv.org/abs/2106.09685)
+* [PEFT: Parameter-Efficient Fine-Tuning](https://huggingface.co/docs/peft)
 
 ---
 
-## Files
+### Files
 - `train_grpo.py`: Main training script for GRPO.
 - `grpo_trainer.py`: Custom trainer class for GRPO.
 - `dataset_utils.py`: Utilities for preprocessing and loading datasets.
 - `eval.py`: Evaluation utilities for assessing the performance of the GRPO model.
 
-## Getting Started
+### Getting Started
 To get started with training a model using GRPO, you can run the `train_grpo.py` script. Make sure to configure your environment and datasets appropriately.
 
-## Requirements
+### Requirements
 Ensure all dependencies are installed as listed in the root `requirements.txt` file.
 
-## License
-This project is licensed under the MIT License - see the LICENSE file for details.
-
-## Acknowledgments
+#### Acknowledgments
 - Thanks to the contributors and the open-source community for their support and resources.
 
 # GRPO Training (LoRA + GPT-2)
 
 This directory contains the GRPO training pipeline using HuggingFace + PEFT + LoRA.
 
-## Run
+### Run
 
 ```bash
 python grpo/train_grpo.py --config configs/grpo_config.yaml

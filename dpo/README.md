@@ -1,4 +1,4 @@
-# 🧠 Direct Preference Optimization (DPO) Training Pipeline
+# Direct Preference Optimization (DPO) Training Pipeline
 
 > "Your Language Model is Secretly a Reward Model." — [Rafailov et al., NeurIPS 2023](https://arxiv.org/abs/2305.18290)
 
@@ -8,7 +8,7 @@ DPO trains a policy model directly from preference pairs `(prompt, chosen_respon
 
 ---
 
-## 🗂 Directory Structure
+### Directory Structure
 
 ```
 dpo/
@@ -21,9 +21,9 @@ dpo/
 
 ---
 
-## 🧮 Key Components
+## Key Components
 
-### 🔧 `DPOTrainer` (`dpo_trainer.py`)
+### `DPOTrainer` (`dpo_trainer.py`)
 
 Custom trainer class that implements the DPO loss:
 
@@ -39,7 +39,7 @@ Where:
 * `π_ref` is the reference model (frozen base model)
 * `β` is a hyperparameter controlling KL-penalty
 
-### 🛠️ `train_dpo.py`
+### `train_dpo.py`
 
 * Loads config, tokenizer, and base model
 * Applies LoRA to the policy model
@@ -48,7 +48,7 @@ Where:
 
 ---
 
-## 🧪 Run Training
+## Run Training
 
 > Make sure `configs/dpo_config.yaml` is correctly filled.
 
@@ -58,7 +58,7 @@ python dpo/train_dpo.py
 
 ---
 
-## 🧾 Sample Config (`configs/dpo_config.yaml`)
+## Sample Config (`configs/dpo_config.yaml`)
 
 ```yaml
 model_path: "gpt2"
@@ -76,7 +76,7 @@ beta: 0.1
 
 ---
 
-## 📦 Requirements
+## Requirements
 
 Install dependencies:
 
@@ -94,7 +94,7 @@ You'll need:
 
 ---
 
-## 🧠 Theory: Why DPO?
+## Theory: Why DPO?
 
 DPO sidesteps RL by **reparameterizing the reward model** using log-probability ratios between policy and reference model. This makes DPO:
 
@@ -106,16 +106,16 @@ DPO sidesteps RL by **reparameterizing the reward model** using log-probability 
 
 ---
 
-## 🪪 License
+## License
 
 MIT License
 
 ---
 
-## 🙏 Acknowledgements
+## Acknowledgements
 
 * Based on the original Stanford DPO paper by Rafailov et al. (2023)
-* HuggingFace 🤗 team and PEFT for making adapters dead simple
+* HuggingFace team and PEFT for making adapters dead simple
 
 ## Files
 - `train_dpo.py`: Main training script for DPO.

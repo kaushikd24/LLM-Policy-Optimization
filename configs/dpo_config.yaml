@@ -1,0 +1,11 @@
+model_path: model/base_gpt2
+dataset_path: data/processed/grpo_from_hh_soft.jsonl
+output_dir: outputs/dpo_lora_output
+logging_dir: logs/dpo
+batch_size: 4
+num_epochs: 3
+max_seq_length: 512
+beta: 0.1
+lora_r: 8
+lora_alpha: 32
+lora_dropout: 0.05

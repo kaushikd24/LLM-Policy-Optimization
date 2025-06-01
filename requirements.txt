@@ -1,0 +1,10 @@
+torch 
+transformers
+peft
+accelerate
+datasets
+wandb
+
+# For evaluation
+rouge-score
+nltk
